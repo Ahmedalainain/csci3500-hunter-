@@ -1,0 +1,123 @@
+This problem is to implement a template class without using much help of c++ standard template library (STL)
+so to solve this problem i complete some uncompleted function which is following we can divide
+it in following parts.
+
+1. Constructor              -> These are the first method which is called when object is created.
+2. Function/Methods         -> These are the function or method which is used to get the information/data from object.
+3. Operator Overloading     -> This is the mechanism to use the Operators on custom classes without getting any error.
+4. Destructor               -> This is function which automatically called at the end of object life.
+
+
+    
+1.  Constructor: 
+    Here in this problem 3 Constructor is implenmented which is following
+
+        1. Zero Parameter Constructor: 
+                This method is used to initialise object when there is no Parameter passed
+                in the () Operator of the class. In this we initialise everything with null
+                and zero size.
+
+                    varialbes = 0;
+                    pointers  = NULL;
+
+        2. Copy Constructor:
+                This method is used to copy one object to another or also used as the Constructor
+                in form of Constructor it can directly initialise object with Constructor & will 
+                copy older object's value in the new objects.
+
+                    new_object.variable = old_object.varialbles(value);
+                    *(new_object.pointers) = *old_object.pointers(value);
+
+        3. Parameter Constructor:
+                This method is also called first method which is invoked automatically by
+                compiler when object is created & allocate space in the heap.
+                in this we can pass any parameteric values which is required to initialise
+                the object, let's suppose we initialise here the length(int)
+
+                    varialbes = length;
+                    pointers of array is initialised with equivalent length of array's base pointer. 
+                
+        
+                
+2. Size Calculation Function:
+    This is helper or information or data extraction function from the class object because when 
+    variable are private or protected then can't access them directly so have to access them with
+    these function which is helpfull to contain the security & data hiding property of the object.
+
+        getValue()
+        setValue(), ... etc.
+
+3. Operator Overloading:
+    Here in this class implementation i overloaded 6 Operators (=(2), [], +, << , >>) which are
+    following
+
+    1. "=" Operator (Copy Assignment):
+            This overloading is also works like copy Constructor but act as moving one object
+            values to other object. it simply copy all the old object values to another object.
+
+                new_object.variable = old_object.varialbles(value);
+                *(new_object.pointers) = *old_object.pointers(value);
+
+    2. "=" Operator (Move Assignment):
+            This overloading is also works like copy Constructor but act as moving one object
+            values to other object. it simply copy all the old object values to another object.
+
+                new_object.variable = old_object.varialbles(pointer);
+                (new_object.pointers) = old_object.pointers(pointer);
+            
+    3.  "[]" Operator:
+            This bracket is used get value from the array or from any sequential container so to 
+            use this with our custom class template have to overload with customization. so it customised.
+            when this Operator is invoked with the object then it directly invoke the internal sequential
+            container & extract the value at corresponding index if it is out of bound then it automatically
+            abort the operation
+
+                object[location] -> fetch the value of object.sequence_[] from "location" index 
+                object[location = -1] -> abort()
+
+    4. "+" Operator:
+        This operator is used to addition for two objects, can be explained with following example
+
+            object a, b, c;
+            c = a + b
+                this statement work like
+                    c.x = a.x + b.x;
+                    c.y = a.y + b.y;
+                    ....
+                    ....
+                    ....
+
+    5. "<<" Operator:
+        This is output stream operator which is overlaoded to output the all data varialbes of object. 
+        when we use
+            cout << object << endl;
+            it work following
+                cout << object.x << ", ";
+                cout << object.y << ", ";
+                cout << object.z << ", ";
+                ...
+                ...
+                ...
+                cout << endl; ( however it is defined int the funtion)
+
+    6. ">>" Operator:
+        This is input stream operator which is overlaoded to take input of all data varialbes of object. 
+        when we use
+            cin >> object;
+            it work following
+                cout >> object.x;
+                cout >> object.y;
+                cout >> object.z;
+                ...
+                ...
+                ...
+                ( however it is defined int the funtion)
+
+4. Destructor:
+    This is last function which is automatically invoked when class object life cyle ends. in this whtever
+    memory is allocated in stack is automatically deleted but the memory which is allocated at heap have to
+    delete manaully like in this project sequence_ is deleted which is std: arrya using delete keyword
+        
+        delete object.sequence_;
+
+    
