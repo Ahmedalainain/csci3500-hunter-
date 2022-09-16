@@ -40,15 +40,22 @@ namespace teaching_project
         };
 
         // Copy-constructor.
-         Points2D(const Points2D &rhs)
+        Points2D(const Points2D &rhs)
         {
             this->sequence_ = new std::array<Object, 2>[rhs.size_];
             this->size_ = rhs.size_;
-            for (size_t i=0; i < rhs.size_; i++)
+            for (size_t i = 0; i < rhs.size_; i++)
             {
                 this->sequence_[i][0] = rhs[i][0]; //copying one object element to another
                 this->sequence_[i][1] = rhs[i][1];
             }
+        };
+        
+        // Move-constructor.
+        Points2D(Points2D &rhs) : sequence_{rhs.sequence_}, size_{rhs.size_}
+        {
+            rhs.size_ = 0;
+            rhs.sequence_ = nullptr;
         };
 
         // Copy-assignment. If you have already written
@@ -61,28 +68,24 @@ namespace teaching_project
         // }
         Points2D &operator=(const Points2D &rhs)
         {
-            Points2D copy(rhs.size_);
-            size_t temp = 0;
-            while(temp < rhs.size_){
-                copy.sequence_[temp][0]=rhs[temp][0];
-                copy.sequence_[temp][1]=rhs[temp][1];
-                //std::cout << helper_points.sequence_[temp][0];
-                temp++;
+            if(this != &rhs){
+                delete sequence_;
+                this->sequence_ = new std::array<Object, 2>[rhs.size_];
+                this->size_ = rhs.size_;
+                for (size_t i = 0; i < rhs.size_; i++)
+                {
+                    this->sequence_[i][0] = rhs[i][0]; //copying one object element to another
+                    this->sequence_[i][1] = rhs[i][1];
+                }
             }
-            std::swap(*this, copy); //using std::swap function to just swap the pointer
-            return *this;
+        	return *this;
         };
 
-        // Move-constructor.
-        Points2D(Points2D &&rhs) : sequence_{rhs.sequence_}, size_{rhs.size_}
-        {
-            rhs.size_ = 0;
-            rhs.sequence_ = nullptr;
-        };
+        
 
         // Move-assignment.
         // Just use std::swap() for all variables.
-        Points2D &operator=(Points2D &&rhs)
+        Points2D &operator=(Points2D &rhs)
         {
             if (this != &rhs)
             {
@@ -199,18 +202,16 @@ namespace teaching_project
         {
             int sz;
             in >> sz; //getting size
-            
             Points2D helper_points(sz); // initialize new temporary object
             
             int temp = 0;
             while(temp < sz){
                 in >> helper_points.sequence_[temp][0];
                 in >> helper_points.sequence_[temp][1];
-                //std::cout << helper_points.sequence_[temp][0];
+                
                 temp++;
             }
             temp_points = helper_points;
-            
             return in;
         }
 
